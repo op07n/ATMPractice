@@ -111,7 +111,7 @@
                     <TextBlock>OpenStreet</TextBlock>
                 </CheckBox>
             </StackPanel>
-
+            
             <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" 
                 MouseRightButtonDown="VectorLayer_MouseRightButtonDown">
                 <dxm:ImageTilesLayer Name="mapContainer" 

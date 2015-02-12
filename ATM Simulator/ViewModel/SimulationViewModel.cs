@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Collections.Generic;
-using DevExpress.Xpf.Map;
 using System;
 using System.Collections.ObjectModel;
 using System.Xml.Linq;
