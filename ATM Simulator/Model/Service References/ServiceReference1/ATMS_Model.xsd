@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ser="http://schemas.microsoft.com/2003/10/Serialization/" xmlns:tns="http://schemas.datacontract.org/2004/07/ATMS_Model" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/ATMS_Model" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="Track">
+    <xs:sequence>
+      <xs:element name="ADEP" nillable="true" type="xs:string" />
+      <xs:element name="ADES" nillable="true" type="xs:string" />
+      <xs:element name="ArType" nillable="true" type="xs:string" />
+      <xs:element name="SSR" nillable="true" type="xs:string" />
+      <xs:element name="WTC" type="ser:char" />
+      <xs:element name="callSign" nillable="true" type="xs:string" />
+      <xs:element name="plots" nillable="true" type="tns:ArrayOfPlot" />
+      <xs:element name="trackID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Track" nillable="true" type="tns:Track" />
+  <xs:complexType name="ArrayOfPlot">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Plot" nillable="true" type="tns:Plot" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlot" nillable="true" type="tns:ArrayOfPlot" />
+  <xs:complexType name="Plot">
+    <xs:sequence>
+      <xs:element name="altitude" type="xs:double" />
+      <xs:element name="course" type="xs:double" />
+      <xs:element name="latitude" type="xs:double" />
+      <xs:element name="longitude" type="xs:double" />
+      <xs:element name="speed" type="xs:double" />
+      <xs:element name="time" type="xs:int" />
+      <xs:element name="trackID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Plot" nillable="true" type="tns:Plot" />
+  <xs:complexType name="Scenario">
+    <xs:sequence>
+      <xs:element name="_x003C_tracks_x003E_k__BackingField" nillable="true" type="tns:ArrayOfTrack" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Scenario" nillable="true" type="tns:Scenario" />
+  <xs:complexType name="ArrayOfTrack">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Track" nillable="true" type="tns:Track" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTrack" nillable="true" type="tns:ArrayOfTrack" />
+</xs:schema>

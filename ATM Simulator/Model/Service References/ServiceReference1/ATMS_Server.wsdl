@@ -1,0 +1,198 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="ATMS_Server" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="ATMS_Server" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="ATMS_Server/Imports">
+      <xsd:import namespace="ATMS_Server" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/ATMS_Model" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IServerInterface_populateClient_InputMessage">
+    <wsdl:part name="parameters" element="tns:populateClient" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_populateClient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:populateClientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createScenario_InputMessage">
+    <wsdl:part name="parameters" element="tns:createScenario" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createScenario_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createScenarioResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_playSimulation_InputMessage">
+    <wsdl:part name="parameters" element="tns:playSimulation" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_playSimulation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:playSimulationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewTrack_InputMessage">
+    <wsdl:part name="parameters" element="tns:createNewTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewTrack_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createNewTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewTrackOnMap_InputMessage">
+    <wsdl:part name="parameters" element="tns:createNewTrackOnMap" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewTrackOnMap_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createNewTrackOnMapResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_removeTrack_InputMessage">
+    <wsdl:part name="parameters" element="tns:removeTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_removeTrack_OutputMessage">
+    <wsdl:part name="parameters" element="tns:removeTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_editTrack_InputMessage">
+    <wsdl:part name="parameters" element="tns:editTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_editTrack_OutputMessage">
+    <wsdl:part name="parameters" element="tns:editTrackResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewPlot_InputMessage">
+    <wsdl:part name="parameters" element="tns:createNewPlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewPlot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createNewPlotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewWaypoint_InputMessage">
+    <wsdl:part name="parameters" element="tns:createNewWaypoint" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewWaypoint_OutputMessage">
+    <wsdl:part name="parameters" element="tns:createNewWaypointResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_removePlot_InputMessage">
+    <wsdl:part name="parameters" element="tns:removePlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_removePlot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:removePlotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_editPlot_InputMessage">
+    <wsdl:part name="parameters" element="tns:editPlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_editPlot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:editPlotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_pauseSimulation_InputMessage">
+    <wsdl:part name="parameters" element="tns:pauseSimulation" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_pauseSimulation_OutputMessage">
+    <wsdl:part name="parameters" element="tns:pauseSimulationResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyTimeUpdate_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyTimeUpdate" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyNewScenario_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyNewScenario" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyNewTrack_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyNewTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyRemoveTrack_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyRemoveTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyEditedTrack_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyEditedTrack" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyEditedPlot_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyEditedPlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyNewPlot_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyNewPlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyNewPlots_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyNewPlots" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyRemovePlot_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyRemovePlot" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_notifyRemovePlots_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:notifyRemovePlots" />
+  </wsdl:message>
+  <wsdl:message name="IServerInterface_createNewAutoGeneratedPlots_OutputCallbackMessage">
+    <wsdl:part name="parameters" element="tns:createNewAutoGeneratedPlots" />
+  </wsdl:message>
+  <wsdl:portType name="IServerInterface">
+    <wsdl:operation name="populateClient">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/populateClient" message="tns:IServerInterface_populateClient_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/populateClientResponse" message="tns:IServerInterface_populateClient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createScenario">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createScenario" message="tns:IServerInterface_createScenario_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createScenarioResponse" message="tns:IServerInterface_createScenario_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="playSimulation">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/playSimulation" message="tns:IServerInterface_playSimulation_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/playSimulationResponse" message="tns:IServerInterface_playSimulation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createNewTrack">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewTrack" message="tns:IServerInterface_createNewTrack_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewTrackResponse" message="tns:IServerInterface_createNewTrack_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createNewTrackOnMap">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewTrackOnMap" message="tns:IServerInterface_createNewTrackOnMap_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewTrackOnMapResponse" message="tns:IServerInterface_createNewTrackOnMap_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="removeTrack">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/removeTrack" message="tns:IServerInterface_removeTrack_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/removeTrackResponse" message="tns:IServerInterface_removeTrack_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="editTrack">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/editTrack" message="tns:IServerInterface_editTrack_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/editTrackResponse" message="tns:IServerInterface_editTrack_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createNewPlot">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewPlot" message="tns:IServerInterface_createNewPlot_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewPlotResponse" message="tns:IServerInterface_createNewPlot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createNewWaypoint">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/createNewWaypoint" message="tns:IServerInterface_createNewWaypoint_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewWaypointResponse" message="tns:IServerInterface_createNewWaypoint_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="removePlot">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/removePlot" message="tns:IServerInterface_removePlot_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/removePlotResponse" message="tns:IServerInterface_removePlot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="editPlot">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/editPlot" message="tns:IServerInterface_editPlot_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/editPlotResponse" message="tns:IServerInterface_editPlot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="pauseSimulation">
+      <wsdl:input wsaw:Action="ATMS_Server/IServerInterface/pauseSimulation" message="tns:IServerInterface_pauseSimulation_InputMessage" />
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/pauseSimulationResponse" message="tns:IServerInterface_pauseSimulation_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyTimeUpdate">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyTimeUpdate" message="tns:IServerInterface_notifyTimeUpdate_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyNewScenario">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewScenario" message="tns:IServerInterface_notifyNewScenario_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyNewTrack">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewTrack" message="tns:IServerInterface_notifyNewTrack_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyRemoveTrack">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyRemoveTrack" message="tns:IServerInterface_notifyRemoveTrack_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyEditedTrack">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyEditedTrack" message="tns:IServerInterface_notifyEditedTrack_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyEditedPlot">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyEditedPlot" message="tns:IServerInterface_notifyEditedPlot_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyNewPlot">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewPlot" message="tns:IServerInterface_notifyNewPlot_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyNewPlots">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyNewPlots" message="tns:IServerInterface_notifyNewPlots_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyRemovePlot">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyRemovePlot" message="tns:IServerInterface_notifyRemovePlot_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="notifyRemovePlots">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/notifyRemovePlots" message="tns:IServerInterface_notifyRemovePlots_OutputCallbackMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="createNewAutoGeneratedPlots">
+      <wsdl:output wsaw:Action="ATMS_Server/IServerInterface/createNewAutoGeneratedPlots" message="tns:IServerInterface_createNewAutoGeneratedPlots_OutputCallbackMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+</wsdl:definitions>

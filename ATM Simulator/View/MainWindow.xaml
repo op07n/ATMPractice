@@ -1,0 +1,266 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dxm="http://schemas.devexpress.com/winfx/2008/xaml/map"  
+        xmlns:vm="clr-namespace:ViewModel;assembly=ViewModel"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="View.MainWindow" 
+        Title="View test panel"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.DataContext>
+        <vm:SimulationViewModel/>
+    </Window.DataContext>
+
+    <StackPanel>
+        <Grid>
+            <Grid.Resources>
+                <!--The track template -->
+                <DataTemplate x:Key="trackTemplate">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Rectangle Grid.Row="0" Grid.Column="0" Width="20" Height="20" Fill="Transparent" Stroke="Gray"/>
+
+                        <!-- The grid for the track information on the mat if you check the below grid and column value you will move the inffomration around the track icon-->
+                        <Grid Grid.Row="{Binding row}" Grid.Column="{Binding column}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Right">id:</TextBlock>
+                            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding trackID}"></TextBlock>
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" TextAlignment="Right">sign:</TextBlock>
+                            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding callsign}"></TextBlock>
+
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+
+                <!--The plot template -->
+                <DataTemplate x:Key="plotTemplate">
+                    <!--The plot template -->
+                    <Grid Background="Transparent" Name="thePlot" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                        </Grid.RowDefinitions>
+                        <Ellipse Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="10" Height="10" Fill="gray" Stroke="Gray"/>
+
+                        <!-- The grid for the track information on the map if you check the below grid and column value you will move the inffomration around the track icon-->
+
+                    </Grid>
+                </DataTemplate>
+                <BooleanToVisibilityConverter x:Key="b2v" />
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="400"/>
+                <RowDefinition Height="250"/>
+                <RowDefinition Height="50"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Stackpanel to the left with all the buttons and etc.-->
+            <StackPanel Grid.Row="0" Grid.Column="0">
+                <Button Content="Create Scenario" Command="{Binding CreateScenario}"/>
+                <Button Name="PlaySimulation" Content="Play Simulation" Command="{Binding PlaySimulation}"/>
+                <Button Name="PauseSimulation" Content="Pause Simulation" Command="{Binding PauseSimulation}"/>
+
+                <Label Content="Track:" HorizontalAlignment="Left"/>
+                <!--<Button Content="Create new track" Command="{Binding CreateNewTrack}"/>-->
+                <Button Content="Remove track" Command="{Binding RemoveTrack}"/>
+
+                <Label Content="Plot:" HorizontalAlignment="Left"/>
+                <!--<Button Content="Create new plot" Command="{Binding CreateNewPlot}"/>-->
+                <Button Content="Remove plot" Command="{Binding RemovePlot}"/>
+
+                <!-- Map controls -->
+                <Label Content="Map:"/>
+
+                <Button Content="Import map" Command="{Binding ImportMap}"/>
+
+                <Label Content="Layers:"/>
+
+                <CheckBox Name="layerCheckbox" Margin="5" IsChecked="true">
+                    <TextBlock>Insero</TextBlock>
+                </CheckBox>
+
+                <CheckBox Name="providerCheckbox" Margin="5" IsChecked="true">
+                    <TextBlock>OpenStreet</TextBlock>
+                </CheckBox>
+            </StackPanel>
+
+            <dxm:MapControl Name="theMap" Grid.Row="0" Grid.Column="1" Grid.RowSpan="2"   ZoomLevel="8"  CenterPoint="55.85,9.82" 
+                MouseRightButtonDown="VectorLayer_MouseRightButtonDown">
+                <dxm:ImageTilesLayer Name="mapContainer" 
+                                     Visibility="{Binding IsChecked,ElementName=providerCheckbox,Converter={StaticResource b2v}}">
+                    <dxm:ImageTilesLayer.DataProvider>
+                        <dxm:OpenStreetMapDataProvider/>
+                    </dxm:ImageTilesLayer.DataProvider>
+                </dxm:ImageTilesLayer>
+
+                <!-- layer to show the insero mapping-->
+                <dxm:VectorLayer ItemsSource="{Binding map }" 
+                                 EnableSelection="False" 
+                                 EnableHighlighting="False" 
+                                 Visibility="{Binding IsChecked,ElementName=layerCheckbox,Converter={StaticResource b2v}}"/>
+
+                <!-- layer to show the plots to each track on the map when the server is not playing-->
+                <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }" 
+                                 SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
+                                 LatitudeDataMember="location.Latitude"
+                                 LongitudeDataMember="location.Longitude"
+                                 ItemTemplate="{StaticResource plotTemplate}"
+                                 Visibility="{Binding IsEnabled,ElementName=PlaySimulation,Converter={StaticResource b2v}}">
+                </dxm:VectorLayer>
+
+                <!-- layer to show the history plots to all tracks on the map when the server is playing -->
+                <dxm:VectorLayer ItemsSource="{Binding historyPlots }" 
+                                 SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
+                                 LatitudeDataMember="location.Latitude"
+                                 LongitudeDataMember="location.Longitude"
+                                 ItemTemplate="{StaticResource plotTemplate}"
+                                 Visibility="{Binding serverIsPlaying,Converter={StaticResource b2v}}">
+                </dxm:VectorLayer>
+
+                <!-- layer to show the tracks on the map-->
+                <dxm:VectorLayer ItemsSource="{Binding tracks }" 
+                                 SelectedItem="{Binding selectedTrack, Mode=TwoWay}"
+                                 LatitudeDataMember="currentPlot.location.Latitude"
+                                 LongitudeDataMember="currentPlot.location.Longitude"
+                                 ItemTemplate="{StaticResource trackTemplate}">
+                </dxm:VectorLayer>
+            </dxm:MapControl>
+
+            <!--  Selected track and plot in the top right corner  -->
+            <StackPanel Grid.Row="0" Grid.Column="2">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <!-- Track information -->
+                    <Label Grid.Row="0" Grid.Column="0" Content="Track ID"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding selectedTrack.trackID}"/>
+
+                    <Label Grid.Row="1" Grid.Column="0" Content="SSR"/>
+                    <Label Grid.Row="1" Grid.Column="1" Content="{Binding selectedTrack.SSR}"/>
+
+                    <Label Grid.Row="2" Grid.Column="0" Content="Aircraft type "/>
+                    <Label Grid.Row="2" Grid.Column="1" Content="{Binding selectedTrack.ArType}"/>
+
+                    <Label Grid.Row="3" Grid.Column="0" Content="ADEP "/>
+                    <Label Grid.Row="3" Grid.Column="1" Content="{Binding selectedTrack.ADEP}"/>
+
+                    <Label Grid.Row="4" Grid.Column="0" Content="ADES "/>
+                    <Label Grid.Row="4" Grid.Column="1" Content="{Binding selectedTrack.ADES}"/>
+
+                    <Label  Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Content="Call Sign"></Label>
+                    <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding selectedTrack.callsign}"/>
+
+                    <Label Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Content="Altidue" />
+                    <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding selectedPlot.altitude}"
+                             IsReadOnly="{Binding IsEnabled,ElementName=PlaySimulation,Converter={StaticResource b2v}}"/>
+
+                    <Label Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Content="Speed (m/s)"/>
+                    <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding selectedPlot.speed}"
+                             IsReadOnly="{Binding IsEnabled,ElementName=PlaySimulation,Converter={StaticResource b2v}}"/>
+
+                    <Label Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left" Content="Course"/>
+                    <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding selectedPlot.course}"
+                              IsReadOnly="{Binding IsEnabled,ElementName=PlaySimulation,Converter={StaticResource b2v}}"/>
+
+                    <Button Grid.Row="9" Grid.ColumnSpan="2" Content="Save track changes" Command="{Binding EditTrack}"/>
+                </Grid>
+                <!-- Plot information -->
+                <Grid Visibility="{Binding IsEnabled,ElementName=PlaySimulation,Converter={StaticResource b2v}}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                        <RowDefinition Height="25"/>
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Grid.Column="0" Content="Plot time (s)"/>
+                    <Label Grid.Row="0" Grid.Column="1" Content="{Binding selectedPlot.time}" />
+
+                    <Label Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Content="Altitude"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding selectedPlot.altitude}"/>
+
+                    <Label Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Content="Speed"></Label>
+                    <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding selectedPlot.speed}"/>
+
+                    <Label Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Content="Course"></Label>
+                    <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding selectedPlot.course}"/>
+
+                    <!--Add the save plots command binding here -->
+                    <Button Grid.Row="4" Grid.ColumnSpan="2" Content="Save plot changes" Command="{Binding EditPlot}"/>
+                </Grid>
+            </StackPanel>
+
+            <!-- List of all the tracks avilable -->
+            <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding tracks}" SelectedItem="{Binding selectedTrack }">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Rectangle Width="20" Height="20" Fill="Transparent" Stroke="Gray"/>
+                            <Label Content="sign:"></Label>
+                            <Label Content="{Binding callsign}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Label Content="{Binding tracks.Count}"/>
+                <Slider  Width="400" Value="{Binding viewModelCurrentTime , Mode=TwoWay}" Orientation="Horizontal" HorizontalAlignment="Left" 
+                        IsSnapToTickEnabled="True" Maximum="{Binding serverCurrentTime}" TickPlacement="BottomRight" 
+                        AutoToolTipPlacement="BottomRight" TickFrequency="4"
+                        AutoToolTipPrecision="2" IsDirectionReversed="False"
+                        IsMoveToPointEnabled="False" />
+                <CheckBox Content="Sync" IsChecked="{Binding syncTimeWithServer,Mode=TwoWay}" />
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</Window>
+
