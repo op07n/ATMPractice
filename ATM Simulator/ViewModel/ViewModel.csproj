@@ -48,7 +48,14 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">   
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' "> 
+    
+    
+    <Reference Include="DevExpress.Xpf.Core.v18.2">
+      <HintPath>..\packages\YshXaf.DevExpress.Xpf.Core_yesfree.18.2.5\lib\net40\DevExpress.Xpf.Core.v18.2.dll</HintPath>
+    </Reference>  
+    
+    
     <Reference Include="DevExpress.Map.v18.2.Core">
       <HintPath>..\packages\YshXaf.DevExpress.Map.Core_yesfree.18.2.5\lib\net40\DevExpress.Map.v18.2.Core.dll</HintPath>
     </Reference>    
