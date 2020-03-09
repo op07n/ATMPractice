@@ -14,7 +14,11 @@ jobs:
         uses: nuget/setup-nuget@v1
         with:
           nuget-version: latest
-      - run: nuget restore
+     
+
+      - name: Nuget Restore ATM Simulator
+        run: nuget restore $Env:GITHUB_WORKSPACE\ATM%20Simulator\ATM%20Simulator.sln
+        
 
       - name: Build
         run: |
