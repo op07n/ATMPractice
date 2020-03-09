@@ -47,11 +47,15 @@
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
-  <ItemGroup>
-   
-    <Reference Include="DevExpress.Map.v18.2.Core, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
-   
-    <Reference Include="DevExpress.Xpf.Map.v18.2, Version=14.2.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">   
+    <Reference Include="DevExpress.Map.v18.2.Core">
+      <HintPath>..\packages\YshXaf.DevExpress.Map.Core_yesfree.18.2.5\lib\net40\DevExpress.Map.v18.2.Core.dll</HintPath>
+    </Reference>    
+    <Reference Include="DevExpress.Xpf.Map.v18.2">
+      <HintPath>..\packages\YshXaf.DevExpress.Xpf.Map_yesfree.18.2.5\lib\net40\DevExpress.Xpf.Map.v18.2.dll</HintPath>
+    </Reference>
+    
     <Reference Include="GalaSoft.MvvmLight">
       <HintPath>..\packages\MvvmLightLibs.4.4.32.7\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
     </Reference>
