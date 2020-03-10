@@ -28,4 +28,4 @@ jobs:
       - uses: actions/upload-artifact@v1
         with:
           name: artifact
-          path: ./ATMPractice/bin/Debug
+          path: "$Env:GITHUB_WORKSPACE\ATM Simulator"
