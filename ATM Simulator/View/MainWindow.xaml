@@ -122,12 +122,14 @@
                 </dxm:ImageTilesLayer>
 
                 <!-- layer to show the insero mapping-->
+                <!--    
                 <dxm:VectorLayer ItemsSource="{Binding map }" 
                                  EnableSelection="False" 
                                  EnableHighlighting="False" 
                                  Visibility="{Binding IsChecked,ElementName=layerCheckbox,Converter={StaticResource b2v}}"/>
-
+                -->
                 <!-- layer to show the plots to each track on the map when the server is not playing-->
+                <!--
                 <dxm:VectorLayer ItemsSource="{Binding selectedTrack.plots }" 
                                  SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
                                  LatitudeDataMember="location.Latitude"
@@ -135,8 +137,9 @@
                                  ItemTemplate="{StaticResource plotTemplate}"
                                  Visibility="{Binding IsEnabled,ElementName=PlaySimulation,Converter={StaticResource b2v}}">
                 </dxm:VectorLayer>
-
+                -->
                 <!-- layer to show the history plots to all tracks on the map when the server is playing -->
+                    <!--
                 <dxm:VectorLayer ItemsSource="{Binding historyPlots }" 
                                  SelectedItem="{Binding selectedPlot, Mode=TwoWay}"
                                  LatitudeDataMember="location.Latitude"
@@ -144,14 +147,17 @@
                                  ItemTemplate="{StaticResource plotTemplate}"
                                  Visibility="{Binding serverIsPlaying,Converter={StaticResource b2v}}">
                 </dxm:VectorLayer>
+                -->
 
                 <!-- layer to show the tracks on the map-->
+                    <!--
                 <dxm:VectorLayer ItemsSource="{Binding tracks }" 
                                  SelectedItem="{Binding selectedTrack, Mode=TwoWay}"
                                  LatitudeDataMember="currentPlot.location.Latitude"
                                  LongitudeDataMember="currentPlot.location.Longitude"
                                  ItemTemplate="{StaticResource trackTemplate}">
                 </dxm:VectorLayer>
+                -->
             </dxm:MapControl>
 
             <!--  Selected track and plot in the top right corner  -->
